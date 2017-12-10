@@ -2090,7 +2090,6 @@ def tmuxomatic( program_cli, full_cli, user_wh, session_name, session, active_se
                     # There are two ways to fix this.  1) Add "set-option -g allow-rename off" to your ".tmux.conf".
                     # 2) Add "export DISABLE_AUTO_TITLE=true" to your shell's run commands file (e.g., ".bashrc").
                     # Here we automatically do method 1 for the user, unless the user requests otherwise.
-                    list_build.append( "set-option -t " + session_name + " quiet on" )
                     renaming = [ "off", "on" ][ARGS.renaming]
                     list_build.append( "set-option -t " + session_name + " allow-rename " + renaming )
                     list_build.append( "set-option -t " + session_name + " automatic-rename " + renaming )
