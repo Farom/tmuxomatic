@@ -512,6 +512,9 @@ def signal_handler_hup( signal_number, frame ):
     _ = repr(signal_number) + repr(frame) # Satisfies pylint
     raise KeyboardInterrupt
 
+def support_quiet_option(version):
+    return float(version) < 2.5
+
 def satisfies_minimum_version(minimum, version):
     """
     Asserts compliance by tmux version.  I've since seen a similar version check somewhere that may come with Python
@@ -2090,6 +2093,9 @@ def tmuxomatic( program_cli, full_cli, user_wh, session_name, session, active_se
                     # There are two ways to fix this.  1) Add "set-option -g allow-rename off" to your ".tmux.conf".
                     # 2) Add "export DISABLE_AUTO_TITLE=true" to your shell's run commands file (e.g., ".bashrc").
                     # Here we automatically do method 1 for the user, unless the user requests otherwise.
+
+                    if support_quiet_option(tmux_version()[1]):
+                        list_build.append( "set-option -t " + session_name + " quiet on" )
                     renaming = [ "off", "on" ][ARGS.renaming]
                     list_build.append( "set-option -t " + session_name + " allow-rename " + renaming )
                     list_build.append( "set-option -t " + session_name + " automatic-rename " + renaming )
