@@ -777,8 +777,12 @@ class SessionFile(object):
         self.Load_Shorthand_SharedCore( bol )
     def Load(self):
         # Load raw data
+        if sys.version_info < (3, ):
+            mode = "rU"
+        else:  # python 3 deprecates mode "U" in favor of "newline" option
+            mode = "r"
         rawfile = ""
-        f = open(self.filename, "rU")
+        f = open(self.filename, mode)
         while True:
             line = f.readline()
             if not line: break # EOF
