@@ -515,6 +515,15 @@ def signal_handler_hup( signal_number, frame ):
 def support_quiet_option(version):
     return float(version) < 2.5
 
+def new_session_dimensions_args(tmux_version, user_w, user_h):
+    if float(tmux_version) <= 2.5:
+        return ''                                           # Tmux 2.5 use user screen as default windowsize
+    if float(tmux_version) < 2.8:
+        return "-x " + str(user_w) + " -y " + str(user_h)   # Tmux 2.6 use 80x24 window for detached sessions
+
+    return "-x - -y -"                                      # tmux 2.8 add '-' argument to use users screen as default window size
+
+
 def satisfies_minimum_version(minimum, version):
     """
     Asserts compliance by tmux version.  I've since seen a similar version check somewhere that may come with Python
@@ -2092,7 +2101,7 @@ def tmuxomatic( program_cli, full_cli, user_wh, session_name, session, active_se
                     # The shell's cwd must be set, the only other way to do this is to discard the
                     # window that is automatically created when calling "new-session".
                     cwd_execution = ("cd " + list_panes_dir) if list_panes_dir else ""
-                    list_build.append( "new-session -d -s " + session_name + " -n \"" + window_name + "\"" )
+                    list_build.append( "new-session -d -s " + session_name + " -n \"" + window_name + "\" " + new_session_dimensions_args(USERS_TMUX, user_wh[0], user_wh[1]) )
                     # Normally, tmux automatically renames windows based on whatever is running in the focused pane.
                     # There are two ways to fix this.  1) Add "set-option -g allow-rename off" to your ".tmux.conf".
                     # 2) Add "export DISABLE_AUTO_TITLE=true" to your shell's run commands file (e.g., ".bashrc").
