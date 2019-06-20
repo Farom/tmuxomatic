@@ -2107,7 +2107,7 @@ def tmuxomatic( program_cli, full_cli, user_wh, session_name, session, active_se
                     # 2) Add "export DISABLE_AUTO_TITLE=true" to your shell's run commands file (e.g., ".bashrc").
                     # Here we automatically do method 1 for the user, unless the user requests otherwise.
 
-                    if support_quiet_option(tmux_version()[1]):
+                    if support_quiet_option(USERS_TMUX):
                         list_build.append( "set-option -t " + session_name + " quiet on" )
                     renaming = [ "off", "on" ][ARGS.renaming]
                     list_build.append( "set-option -t " + session_name + " allow-rename " + renaming )
