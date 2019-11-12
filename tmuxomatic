@@ -495,6 +495,7 @@ def tmux_version(): # -> name, version
     result = [ line.strip() for line in result.split("\n") if line.strip() ]
     name = result[0].split(" ", 1)[0] # Name that was reported by tmux (should be "tmux")
     version = result[0].split(" ", 1)[1] # Only the version is needed
+    version = re.sub(r'[a-z]', '', version, re.I) # remove caracters from version (i.e: 2.9a is 2.9)
     return name, version
 
 def signal_handler_break( signal_number, frame ):
