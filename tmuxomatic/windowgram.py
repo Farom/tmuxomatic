@@ -1061,8 +1061,8 @@ class Windowgram():
                 elif edge[0] == w:  panes.append( windowgram_chars[y][w-1] )
                 else:               panes += [ windowgram_chars[y][edge[0]-1], windowgram_chars[y][edge[0]] ]
         else: # if axis == "h":
-            if edge[0] is not 0:    panes += [ windowgram_chars[edge[0]-1][x] for x in range(edge[1], edge[2]) ]
-            if edge[0] is not h:    panes += [ windowgram_chars[edge[0]  ][x] for x in range(edge[1], edge[2]) ]
+            if edge[0] != 0:    panes += [ windowgram_chars[edge[0]-1][x] for x in range(edge[1], edge[2]) ]
+            if edge[0] != h:    panes += [ windowgram_chars[edge[0]  ][x] for x in range(edge[1], edge[2]) ]
         return "".join( set( panes ) )
 
     ##
@@ -2065,10 +2065,10 @@ class EdgeProcessing:
         ignore = "*@:" # The "@" is for when the parameters hint and edge are combined
         # Reduce edge and resolve hint
         swapped = ""
-        res_hint = resolve_vhtblr( hint ) if hint is not "" else ""
+        res_hint = resolve_vhtblr( hint ) if hint != "" else ""
         res_edge = thruvalid_panes( edge, ignore )
         if not res_hint or not res_edge:
-            swapped_hint = resolve_vhtblr( edge ) if edge is not "" else ""
+            swapped_hint = resolve_vhtblr( edge ) if edge != "" else ""
             swapped_edge = thruvalid_panes( hint, ignore )
             if swapped_hint and res_edge:
                 res_hint, res_edge = swapped_hint, swapped_edge
@@ -2871,7 +2871,7 @@ def cmd_drag_2(fpp_PRIVATE, hint, edge, direction, size, limit=None):
         for wgm0s, wgm0x, wgm1s, wgm1x in res_scalegroups_masks:
             # Scale this scalegroup
             def modifier(which, val, size, inv):
-                return ( val + ( -size if ( ( inv == "-" ) ^ ( which is not 0 ) ) else size ) ) if val else 0
+                return ( val + ( -size if ( ( inv == "-" ) ^ ( which != 0 ) ) else size ) ) if val else 0
             sw0, sh0 = wgm0s.Analyze_WidthHeight()
             sw1, sh1 = wgm1s.Analyze_WidthHeight()
             if res_direction == "h" and sw0: sw0 = modifier(0, sw0, count, inverse)

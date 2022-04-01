@@ -620,7 +620,7 @@ class Window(object): # Common container of window data, divided into sections i
             ", ".join(
                 [ "'" + key + "': [ data = \"" + self.__dict__['data'][key].replace("\n", "\\n") + \
                 "\", starting_line_number = " + str(self.__dict__['line'][key]) + " ]\n" \
-                for key in self.ValidKeys() if self[key] is not "" ] \
+                for key in self.ValidKeys() if self[key] != "" ] \
             ) + \
         " ]\n"
     def ClearKey(self, key):
@@ -632,7 +632,7 @@ class Window(object): # Common container of window data, divided into sections i
     def Serialize(self): # Serialized by appearance
         return "".join( [ self[key] for key in self.ValidKeys() ] )
     def WorkingKeys(self):
-        return [ key for key in self.ValidKeys() if self[key] is not "" ]
+        return [ key for key in self.ValidKeys() if self[key] != "" ]
     def IsFooter(self):
         summary = " ".join( self.WorkingKeys() )
         return True if summary == "title_comments" or summary == "" else False
@@ -1345,7 +1345,7 @@ def flex_shell(session, serial=0):
     ##
     ## Show list of windows, or assign selected window
     ##
-    if serial is 0:
+    if serial == 0:
         cmd_list(fpp)
     else:
         flexmenu_index[0] = serial
