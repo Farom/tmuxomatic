@@ -1,4 +1,8 @@
 
+# This Fork of tmuxomatic
+
+The original project (https://github.com/oxidane/tmuxomatic) is unfortunately orphaned since 2016.
+This fork collects patches from various people and is used to build Debian packages.
 
 # tmuxomatic [![](http://img.shields.io/pypi/v/tmuxomatic.svg?style=flat)](https://pypi.python.org/pypi/tmuxomatic)
 
