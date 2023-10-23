@@ -1923,7 +1923,7 @@ class flex(object):
         # From function build usage
         self.usage = self.command_only
         self.arglens = [ 0, 0 ] # [ Required, Total ]
-        spec = inspect.getargspec(function)
+        spec = inspect.getfullargspec(function)
         la = len(spec.args) if spec.args else 0
         ld = len(spec.defaults) if spec.defaults else 0
         class NoDefault: pass # Placeholder since None is a valid default argument
